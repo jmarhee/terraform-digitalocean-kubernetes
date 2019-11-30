@@ -6,6 +6,7 @@ variable ssh_keys {}
 variable kubernetes_version {}
 variable kube_token {}
 variable primary_node_ip {}
+variable pool_label {}
 
 data "template_file" "node" {
   template = "${file("${path.module}/node.tpl")}"
@@ -18,7 +19,7 @@ data "template_file" "node" {
 }
 
 resource "digitalocean_droplet" "k8s_node" {
-  name               = "${format("${var.cluster_name}-node-%02d", count.index)}"
+  name               = "${format("${var.cluster_name}-${var.pool_label}-node-%02d", count.index)}"
   image              = "ubuntu-18-04-x64"
   count              = "${var.node_count}"
   size               = "${var.size}"

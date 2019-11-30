@@ -1,6 +1,7 @@
-module "nodes" {
+module "nodes_green" {
   source             = "./modules/node_pool"
   cluster_name       = "${var.cluster_name}"
+  pool_label         = "green"
   node_count         = "${var.node_count}"
   size               = "${var.node_size}"
   region             = "${var.region}"
