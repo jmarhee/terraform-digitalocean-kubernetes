@@ -19,10 +19,10 @@ variable "primary_size" {
 
 variable "cluster_name" {
   description = "Name of your cluster. Alpha-numeric and hyphens only, please."
-  default     = "digitalocean-k8s"
+  default     = "krebernetes"
 }
 
-variable "count" {
+variable "node_count" {
   default     = "3"
   description = "Number of nodes."
 }
@@ -39,7 +39,7 @@ variable "digitalocean_ccm_release" {
 
 variable "kubernetes_version" {
   description = "Version of Kubeadm to install"
-  default     = "1.12.3-00"
+  default     = "1.16.0-00"
 }
 
 variable "secrets_encryption" {

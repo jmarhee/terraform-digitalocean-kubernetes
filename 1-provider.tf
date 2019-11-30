@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    endpoint                    = "sfo2.digitaloceanspaces.com"
+    api_endpoint                    = "nyc3.digitaloceanspaces.com"
     region                      = "us-west-1"
     key                         = "terraform.tfstate"
     skip_requesting_account_id  = true
@@ -14,16 +14,6 @@ provider "digitalocean" {
   token = "${var.digitalocean_token}"
 }
 
-resource "random_string" "kube_init_token_a" {
-  length  = 6
-  special = false
-  upper   = false
-}
-
-resource "random_string" "kube_init_token_b" {
-  length      = 16
-  special     = false
-  upper       = false
-  min_lower   = 6
-  min_numeric = 6
+module "kube_token_1" {
+  source = "./modules/kube-token"
 }

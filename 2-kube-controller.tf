@@ -1,22 +1,13 @@
-data "template_file" "controller" {
-  template = "${file("${path.module}/controller.tpl")}"
+module "controllers" {
+  source = "./modules/controller_pool"
 
-  vars {
-    kube_token         = "${random_string.kube_init_token_a.result}.${random_string.kube_init_token_b.result}"
-    do_token           = "${var.digitalocean_token}"
-    ccm_version        = "${var.digitalocean_ccm_release}"
-    kube_version       = "${var.kubernetes_version}"
-    secrets_encryption = "${var.secrets_encryption}"
-  }
-}
-
-resource "digitalocean_droplet" "k8s_primary" {
-  name               = "${var.cluster_name}-primary"
-  image              = "ubuntu-16-04-x64"
-  size               = "${var.primary_size}"
-  region             = "${var.region}"
-  backups            = "true"
-  private_networking = "true"
-  ssh_keys           = "${var.ssh_key_fingerprints}"
-  user_data          = "${data.template_file.controller.rendered}"
+  kube_token               = "${module.kube_token_1.token}"
+  digitalocean_token       = "${var.digitalocean_token}"
+  kubernetes_version       = "${var.kubernetes_version}"
+  secrets_encryption       = "${var.secrets_encryption}"
+  primary_size             = "${var.primary_size}"
+  ssh_key_fingerprints     = "${var.ssh_key_fingerprints}"
+  region                   = "${var.region}"
+  cluster_name             = "${var.cluster_name}"
+  digitalocean_ccm_release = "${var.digitalocean_ccm_release}"
 }
